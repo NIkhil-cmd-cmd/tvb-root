@@ -40,7 +40,7 @@ from tvb.basic.logger.builder import get_logger
 from tvb.basic.profile import TvbProfile
 
 LOGGER = get_logger(__name__)
-ENDPOINTS_FORMAT = 'https://kubernetes.default.svc/api/v1/namespaces/{}/endpoints/{}'
+ENDPOINTS_FORMAT = 'http://kubernetes.default.svc/api/v1/namespaces/{}/endpoints/{}'
 PATH_TOKEN = '/var/run/secrets/kubernetes.io/serviceaccount/token'
 
 
