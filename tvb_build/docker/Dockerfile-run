@@ -7,7 +7,7 @@ ARG JUPYTER_CONFIG=$USER_HOME/.jupyter
 
 WORKDIR $USER_HOME
 
-RUN apt-get -y update && apt-get -y install build-essential gcc
+RUN apt-get -y update && apt-get -y install build-essential gcc rsync
 RUN apt-get -y update && apt-get -y install texlive-base texlive-formats-extra
 RUN apt-get -y update && apt-get -y install octave postgresql
 
