@@ -40,7 +40,7 @@ from tvb.basic.logger.builder import get_logger
 from tvb.basic.profile import TvbProfile
 
 LOGGER = get_logger(__name__)
-ENDPOINTS_FORMAT = 'http://kubernetes.default.svc/api/v1/namespaces/{}/endpoints/{}'
+ENDPOINTS_FORMAT = 'https://kubernetes.default.svc/api/v1/namespaces/{}/endpoints/{}'
 PATH_TOKEN = '/var/run/secrets/kubernetes.io/serviceaccount/token'
 
 
@@ -82,6 +82,6 @@ class KubeNotifier(object):
     def fetch_endpoints(auth_header, target_application=TvbProfile.current.web.OPENSHIFT_APPLICATION):
 
         endpoint_url = ENDPOINTS_FORMAT.format(TvbProfile.current.web.OPENSHIFT_NAMESPACE, target_application)
-        response = requests.get(url=endpoint_url, headers=auth_header)
+        response = requests.get(url=endpoint_url, headers=auth_header, verify=False)
         response.raise_for_status()
         return response
