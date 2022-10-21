@@ -86,8 +86,7 @@ class KubeNotifier(object):
 
         v1 = client.CoreV1Api()
         response = v1.read_namespaced_endpoints_with_http_info(target_application,
-                                                               TvbProfile.current.web.OPENSHIFT_NAMESPACE,
-                                                               watch=False)
+                                                               TvbProfile.current.web.OPENSHIFT_NAMESPACE)
         LOGGER.info(f"This is the response from Kclient: {response}")
 
         # endpoint_url = ENDPOINTS_FORMAT.format(TvbProfile.current.web.OPENSHIFT_NAMESPACE, target_application)
