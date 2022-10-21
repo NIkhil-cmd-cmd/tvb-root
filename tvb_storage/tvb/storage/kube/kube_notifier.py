@@ -33,6 +33,7 @@ Service layer used for kubernetes calls.
 .. moduleauthor:: Bogdan Valean <bogdan.valean@codemart.ro>
 """
 
+from kubernetes import client, config
 import requests
 from subprocess import Popen, PIPE
 from concurrent.futures.thread import ThreadPoolExecutor
@@ -81,10 +82,15 @@ class KubeNotifier(object):
     @staticmethod
     def fetch_endpoints(auth_header, target_application=TvbProfile.current.web.OPENSHIFT_APPLICATION):
 
-        session = requests.Session()
-        session.verify = False
+        config.load_incluster_config()
 
-        endpoint_url = ENDPOINTS_FORMAT.format(TvbProfile.current.web.OPENSHIFT_NAMESPACE, target_application)
-        response = requests.get(url=endpoint_url, headers=auth_header)
-        response.raise_for_status()
+        v1 = client.CoreV1Api()
+        response = v1.read_namespaced_endpoints_with_http_info(target_application,
+                                                               TvbProfile.current.web.OPENSHIFT_NAMESPACE,
+                                                               watch=False)
+        LOGGER.info(f"This is the response from Kclient: {response}")
+
+        # endpoint_url = ENDPOINTS_FORMAT.format(TvbProfile.current.web.OPENSHIFT_NAMESPACE, target_application)
+        # response = requests.get(url=endpoint_url, headers=auth_header)
+        # response.raise_for_status()
         return response
